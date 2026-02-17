@@ -43,3 +43,6 @@
 
 ## Commands
 - **Create initial project files and folder structure:** `composer create-project hubleto/erp-project .`
+
+## Description of the app
+// PUT HERE DESCRIPTION OF THE APP YOU WANT TO GENERATE
