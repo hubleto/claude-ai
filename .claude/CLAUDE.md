@@ -1,26 +1,41 @@
-# Project: Hubleto AI-generated ERP
+# Custom Hubleto CRM/ERP
 
-## Architectural Guidelines
-- **Approach:**
-  - A Hubleto-based customized ERP solutions
-- **Core Principle:**
-  - Core backend framework is Hubleto framework (https://github.com/hubleto/framework)
-  - Core fronted framework is Hubleto React UI (https://github.com/hubleto/react-ui)
-  - Learn architectural documentation from https://developer.hubleto.com
-  - Learn existing functionality in community Hubleto apps (https://github.com/hubleto/erp/apps)
-  - Each new functionality must be encapsulated as a custom Hubleto app (namespace Hubleto\App\Custom)
-  - Each app uses a Model-View-Controller (MVC) architecture
-- **File structure:**
-  - Custom apps (namespace Hubleto\App\Custom) stored only in src/apps
-  - Each app must follow files and folder structure described in https://developer.hubleto.com/v0/docs/erp/apps/folder-structure
-- **Data Access:**
-  - All data access must go through a repository interface. Never use ORM models directly in Use Cases.
-  - Use Eloquent Record Manager for data access
-  - Each model must have its appropriate record manager
-  - Each model must have UPPERCASE relations for each Lookup column.
-  - Each relation must be implemented in record manager, either as eloquent's BelongsTo or HasMany
-- **Anti-Patterns:**
-  - No direct API calls in component rendering logic.
+This document describes the technical details about customization of Hubleto CRM/ERP. In most cases, it refers to developer guide (https://developer.hubleto.eu).
+
+Document contains 2 main chapters:
+  * Chapter *Architectural Guidelines* describes overall technical aspects of Hubleto.
+  * Chapter *Coding and design patterns* describes various aspects of Hubleto customization, such as creating new app, adding a model, adding a controller or using 3-rd party libraries.
+
+
+# Architectural Guidelines
+
+## About
+
+- Hubleto is PHP-based opensource CRM/ERP solution, codebase located in https://github.com/hubleto.
+- Core backend framework is Hubleto framework (https://github.com/hubleto/framework)
+- Core fronted framework is Hubleto React UI (https://github.com/hubleto/react-ui)
+- Each new functionality must be encapsulated as a custom Hubleto app (namespace Hubleto\App\Custom)
+- Each app uses a Model-View-Controller (MVC) architecture
+
+## Available documentation
+
+- Developer guide (https://developer.hubleto.com) contains examples, source documentation and various tips&tricks.
+- Community apps are free and available on github (https://github.com/hubleto/erp/apps)
+
+## Folder and file strtucture
+
+- Custom apps (namespace Hubleto\App\Custom) must be stored in {{ projectFolder }}/src/apps
+- Each app must follow files and folder structure described in https://developer.hubleto.com/v0/docs/erp/apps/folder-structure
+
+## Data Access
+
+- Hubleto wraps Laravel Eloquent into its unique database layer.
+- Hubleto's database layer consists of 2 sub-layers: 
+  - Hubeto\Framework\Model for describing the data structure (columns/attributes), UI behavior (see methods *describeColumns*, *describeInputs*, *describeTable* and *describeForm*) and relations.
+  - Hubleto\Framework\RecordManager for performing the real data access. This RecordManager layer uses Laravel's Eloquent ORM.
+- Each model must have its appropriate record manager
+- Each model must have UPPERCASE relations for each Lookup column.
+- Each relation must be implemented in record manager, either as eloquent's BelongsTo or HasMany
 
 ## Directory structure
 
@@ -35,6 +50,7 @@
   - `tests/`: PHPUnit-compatible tests
 
 ## Technical Constraints
+
 - **Backend language:** PHP
 - **Frontend language:** HTML with Twig, React
 - **Backend framework:** PHP (Hubleto framework, https://github.com/hubleto/framework)
@@ -43,6 +59,7 @@
 
 ## Commands
 - **Create initial project files and folder structure:** `composer create-project hubleto/erp-project .`
+- **Create new custom app named `MyCustomApp`**: `php hubleto create app MyCustomApp`
 
 ## Description of the app
 // PUT HERE DESCRIPTION OF THE APP YOU WANT TO GENERATE
